@@ -6,12 +6,12 @@ use PHPUnit\Framework\TestCase;
 
 class MailTest extends TestCase
 {
-    public function testReturnsExpectedSubject()
+    public function testReturnsExpectedSubject(): void
     {
         $mail = new Mail('some subject', 'jane.doe@example.com');
         $this->assertSame('some subject', $mail->getSubject());
     }
-    public function testReturnsExpectedRecipientAddress()
+    public function testReturnsExpectedRecipientAddress(): void
     {
         $mail = new Mail('some subject', 'jane.doe@example.com');
         $this->assertSame('jane.doe@example.com', $mail->getRecipientAddress());

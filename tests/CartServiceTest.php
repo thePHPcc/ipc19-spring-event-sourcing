@@ -16,7 +16,7 @@ class CartServiceTest extends TestCase
         $this->service = new CartService();
     }
 
-    public function testThrowsExceptionIfSessionIdIsNotKnown()
+    public function testThrowsExceptionIfSessionIdIsNotKnown(): void
     {
         $this->expectException(CartNotFoundException::class);
         $this->service->getCartItems(new SessionId('foo'));
@@ -29,7 +29,7 @@ class CartServiceTest extends TestCase
      * @param int $expectedCount
      * @throws CartNotFoundException
      */
-    public function testReturnsCartItemCollectionWithExpectedAmountOfItems(SessionId $sessionId, int $expectedCount)
+    public function testReturnsCartItemCollectionWithExpectedAmountOfItems(SessionId $sessionId, int $expectedCount): void
     {
         $collection = $this->service->getCartItems($sessionId);
         $this->assertCount($expectedCount, $collection);

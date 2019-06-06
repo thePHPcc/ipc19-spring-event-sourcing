@@ -6,7 +6,7 @@ use PHPUnit\Framework\TestCase;
 
 class SessionIdTest extends TestCase
 {
-    public function testReturnsExpectedString()
+    public function testReturnsExpectedString(): void
     {
         $sessionId = new SessionId('foo');
         $this->assertSame('foo', $sessionId->asString());

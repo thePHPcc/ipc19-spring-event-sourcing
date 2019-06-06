@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 
 class CartItemCollectionTest extends TestCase
 {
-    public function testIsCountable()
+    public function testIsCountable(): void
     {
         $collection = new CartItemCollection();
         $this->assertCount(0, $collection);
@@ -18,7 +18,7 @@ class CartItemCollectionTest extends TestCase
         $this->assertCount(3, $collection);
     }
 
-    public function testIsIterable()
+    public function testIsIterable(): void
     {
         $collection = new CartItemCollection();
         $item1 = $this->createCartItemMock();

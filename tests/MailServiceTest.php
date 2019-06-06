@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 
 class MailServiceTest extends TestCase
 {
-    public function testWritesExpectedOutput()
+    public function testWritesExpectedOutput(): void
     {
         $mail = $this->createMailMock();
         $mail->method('getSubject')->willReturn('some subject');

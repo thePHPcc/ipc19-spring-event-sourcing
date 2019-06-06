@@ -6,7 +6,7 @@ use PHPUnit\Framework\TestCase;
 
 class CartItemTest extends TestCase
 {
-    public function testGetters()
+    public function testGetters(): void
     {
         $item = new CartItem(12, 'some item', 3999);
         $this->assertSame(12, $item->getId());
