@@ -3,7 +3,7 @@ services:
   nginx:
     image: nginx:1.17-alpine
     volumes:
-      - .:/var/www/html
+      - ./frontend:/var/www/html
       - ./docker/checkout.conf:/etc/nginx/conf.d/default.conf
     ports:
       - 8080:80
