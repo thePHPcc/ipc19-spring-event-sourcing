@@ -11,7 +11,7 @@ class CartServiceTest extends TestCase
      */
     private $service;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->service = new CartService();
     }
