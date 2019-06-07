@@ -28,17 +28,23 @@ class Checkout
         $this->replay();
     }
 
-    public function startCheckout(
-        CartItemCollection $cartItems,
-        SessionId $sessionId
-    )
+    public function getEvents(): EventLog
+    {
+        return $this->eventLog;
+    }
+
+    public function startCheckout(CartItemCollection $cartItems): void
     {
         if ($this->checkoutStarted) {
             throw new CheckoutAlreadyStartedException();
         }
-        $this->eventLog->add(
-            new CheckoutStartedEvent($cartItems, $sessionId, $this->currentDateTime)
-        );
+        $this->recordEvent(new CheckoutStartedEvent($cartItems, $this->currentDateTime));
+    }
+
+    private function recordEvent(Event $event): void
+    {
+        $this->applyEvent($event);
+        $this->eventLog->add($event);
     }
 
     private function replay(): void

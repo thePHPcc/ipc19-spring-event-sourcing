@@ -2,7 +2,6 @@
 
 namespace Eventsourcing;
 use DateTimeImmutable;
-use Eventsourcing\SessionId;
 use Eventsourcing\Checkout\CartItemCollection;
 
 class CheckoutStartedEvent implements Event
@@ -13,23 +12,16 @@ class CheckoutStartedEvent implements Event
     private $cartItems;
 
     /**
-     * @var SessionId
-     */
-    private $sessionId;
-
-    /**
      * @var DateTimeImmutable
      */
     private $occuredAt;
 
     public function __construct(
         CartItemCollection $cartItems,
-        SessionId $sessionId,
         DateTimeImmutable $occuredAt
     )
     {
         $this->cartItems = $cartItems;
-        $this->sessionId = $sessionId;
         $this->occuredAt = $occuredAt;
     }
 }
