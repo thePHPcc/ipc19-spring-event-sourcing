@@ -5,32 +5,28 @@ use Eventsourcing\Checkout\CheckoutId;
 
 class Session
 {
-    /**
-     * @var CheckoutId
-     */
-    private $checkoutId;
-
-    /**
-     * @var SessionId
-     */
-    private $id;
-
-    public function __construct(SessionId $id)
+    public function __construct()
     {
-        $this->id = $id;
+        session_name('checkout_demo_session');
+        session_start();
     }
 
     public function getCheckoutId(): CheckoutId
     {
-        if ($this->checkoutId === null) {
-            $this->checkoutId = new CheckoutId();
+        if (!isset($_SESSION['checkoutId'])) {
+            $_SESSION['checkoutId'] = new CheckoutId();
         }
 
-        return $this->checkoutId;
+        return $_SESSION['checkoutId'];
     }
 
     public function getId(): SessionId
     {
-        return $this->id;
+       return new SessionId(session_id());
+    }
+
+    public function hasCheckoutId(): bool
+    {
+        return array_key_exists('checkoutId', $_SESSION);
     }
 }

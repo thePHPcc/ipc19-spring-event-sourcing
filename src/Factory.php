@@ -3,6 +3,8 @@
 namespace Eventsourcing;
 use Eventsourcing\Checkout\BillingAddress;
 use Eventsourcing\Checkout\CheckoutService;
+use Eventsourcing\Http\CommandFactory;
+use Eventsourcing\Http\QueryFactory;
 
 class Factory
 {
@@ -51,6 +53,16 @@ class Factory
         return new CompleteCheckoutCommand(
             $this->createCheckoutService()
         );
+    }
+
+    public function createHttpQueryFactory(): QueryFactory
+    {
+        return new QueryFactory($this->session);
+    }
+
+    public function createHttpCommandFactory(): CommandFactory
+    {
+        return new CommandFactory($this);
     }
 
     private function createCartService(): CartService
