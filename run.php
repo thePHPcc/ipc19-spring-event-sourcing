@@ -7,7 +7,7 @@ use Eventsourcing\SessionId;
 
 require __DIR__ . '/vendor/autoload.php';
 
-$sessionId = new SessionId('bar');
+$sessionId = new SessionId('foo');
 
 $factory = new Factory($sessionId);
 
