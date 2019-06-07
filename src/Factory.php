@@ -1,6 +1,7 @@
 <?php declare(strict_types=1);
 
 namespace Eventsourcing;
+use Eventsourcing\Checkout\BillingAddress;
 use Eventsourcing\Checkout\CheckoutService;
 
 class Factory
@@ -33,6 +34,21 @@ class Factory
     {
         return new StartCheckoutCommand(
             $this->createCartService(),
+            $this->createCheckoutService()
+        );
+    }
+
+    public function createSetBillingAddressCommand(BillingAddress $billingAddress): SetBillingAddressCommand
+    {
+        return new SetBillingAddressCommand(
+            $this->createCheckoutService(),
+            $billingAddress
+        );
+    }
+
+    public function createCompleteCheckoutCommand(): CompleteCheckoutCommand
+    {
+        return new CompleteCheckoutCommand(
             $this->createCheckoutService()
         );
     }
