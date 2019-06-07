@@ -21,14 +21,14 @@ class Checkout
      */
     private $currentDateTime;
 
-    public function __construct(EventLog $eventLog, DateTimeImmutable $currentDateTime)
+    public function __construct(EventLog $history, DateTimeImmutable $currentDateTime)
     {
-        $this->eventLog = $eventLog;
         $this->currentDateTime = $currentDateTime;
-        $this->replay();
+        $this->eventLog = new EventLog();
+        $this->replay($history);
     }
 
-    public function getEvents(): EventLog
+    public function getRecordedEvent(): EventLog
     {
         return $this->eventLog;
     }
@@ -47,9 +47,9 @@ class Checkout
         $this->eventLog->add($event);
     }
 
-    private function replay(): void
+    private function replay(EventLog $history): void
     {
-        foreach ($this->eventLog as $event) {
+        foreach ($history as $event) {
             /** @var Event $event */
             $this->applyEvent($event);
         }

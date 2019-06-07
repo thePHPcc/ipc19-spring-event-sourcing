@@ -24,4 +24,9 @@ class CheckoutStartedEvent implements Event
         $this->cartItems = $cartItems;
         $this->occuredAt = $occuredAt;
     }
+
+    public function getOccuredAt(): \DateTimeImmutable
+    {
+        return $this->occuredAt;
+    }
 }

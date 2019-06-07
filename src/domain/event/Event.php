@@ -3,5 +3,5 @@
 namespace Eventsourcing;
 interface Event
 {
-
+    public function getOccuredAt(): \DateTimeImmutable;
 }
