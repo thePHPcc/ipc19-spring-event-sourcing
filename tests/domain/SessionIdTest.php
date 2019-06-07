@@ -2,6 +2,7 @@
 
 namespace Eventsourcing;
 
+use Eventsourcing\SessionId;
 use PHPUnit\Framework\TestCase;
 
 class SessionIdTest extends TestCase

@@ -2,6 +2,8 @@
 
 namespace Eventsourcing;
 
+use Eventsourcing\Cart\CartItem;
+use Eventsourcing\Cart\CartItemCollection;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 

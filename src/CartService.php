@@ -2,6 +2,11 @@
 
 namespace Eventsourcing;
 
+use Eventsourcing\Cart\CartItem;
+use Eventsourcing\Cart\CartItemCollection;
+use Eventsourcing\Cart\CartNotFoundException;
+use Eventsourcing\SessionId;
+
 class CartService
 {
     public function getCartItems(SessionId $sessionId): CartItemCollection

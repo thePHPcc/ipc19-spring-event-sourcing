@@ -2,6 +2,8 @@
 
 namespace Eventsourcing;
 
+use Eventsourcing\Cart\CartNotFoundException;
+use Eventsourcing\SessionId;
 use PHPUnit\Framework\TestCase;
 
 class CartServiceTest extends TestCase

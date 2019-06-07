@@ -2,6 +2,7 @@
 
 namespace Eventsourcing;
 
+use Eventsourcing\Cart\CartItem;
 use PHPUnit\Framework\TestCase;
 
 class CartItemTest extends TestCase

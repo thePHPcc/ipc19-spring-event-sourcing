@@ -2,6 +2,8 @@
 
 namespace Eventsourcing;
 
+use Eventsourcing\Mail\Mail;
+
 class MailService
 {
     public function send(Mail $mail)

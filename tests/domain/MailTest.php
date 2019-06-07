@@ -2,6 +2,7 @@
 
 namespace Eventsourcing;
 
+use Eventsourcing\Mail\Mail;
 use PHPUnit\Framework\TestCase;
 
 class MailTest extends TestCase

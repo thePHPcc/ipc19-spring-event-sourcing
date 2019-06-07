@@ -2,6 +2,7 @@
 
 namespace Eventsourcing;
 
+use Eventsourcing\Mail\Mail;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
