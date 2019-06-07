@@ -11,13 +11,13 @@ class Factory
     private $pdo;
 
     /**
-     * @var SessionId
+     * @var Session
      */
-    private $sessionId;
+    private $session;
 
-    public function __construct(SessionId $sessionId)
+    public function __construct(Session $session)
     {
-        $this->sessionId = $sessionId;
+        $this->session = $session;
     }
 
     public function createCheckoutService(): CheckoutService
@@ -33,14 +33,13 @@ class Factory
     {
         return new StartCheckoutCommand(
             $this->createCartService(),
-            $this->createCheckoutService(),
-            $this->sessionId
+            $this->createCheckoutService()
         );
     }
 
     private function createCartService(): CartService
     {
-        return new CartService();
+        return new CartService($this->session->getId());
     }
 
     private function createEventListener(): EventListener
@@ -53,12 +52,12 @@ class Factory
 
     private function createEventLogReader(): EventLogReader
     {
-        return new PdoEventLoadReader($this->createPdo(), $this->sessionId);
+        return new PdoEventLoadReader($this->createPdo(), $this->session->getCheckoutId());
     }
 
     private function createEventLogWriter(): EventLogWriter
     {
-        return new PdoEventLogWriter($this->createPdo(), $this->sessionId);
+        return new PdoEventLogWriter($this->createPdo(), $this->session->getCheckoutId());
     }
 
     private function createCartItemListProjector(): CartItemListProjector
@@ -66,7 +65,7 @@ class Factory
         return new CartItemListProjector(
             file_get_contents(__DIR__ . '/../conf/templates/cartItemList.html'),
             file_get_contents(__DIR__ . '/../conf/templates/cartItem.html'),
-            __DIR__ . '/../var/projections/cartItems_' . $this->sessionId->asString() . '.html'
+            __DIR__ . '/../var/projections/cartItems_' . $this->session->getId()->asString() . '.html'
         );
     }
 

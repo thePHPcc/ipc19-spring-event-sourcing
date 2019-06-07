@@ -1,6 +1,8 @@
 <?php declare(strict_types=1);
 
 namespace Eventsourcing;
+use Eventsourcing\Checkout\CheckoutId;
+
 class PdoEventLogWriter implements EventLogWriter
 {
     /**
@@ -8,14 +10,14 @@ class PdoEventLogWriter implements EventLogWriter
      */
     private $pdo;
     /**
-     * @var SessionId
+     * @var CheckoutId
      */
-    private $sessionId;
+    private $checkoutId;
 
-    public function __construct(\PDO $pdo, SessionId $sessionId)
+    public function __construct(\PDO $pdo, CheckoutId $checkoutId)
     {
         $this->pdo = $pdo;
-        $this->sessionId = $sessionId;
+        $this->checkoutId = $checkoutId;
     }
 
     public function write(EventLog $eventLog): void
@@ -26,7 +28,7 @@ class PdoEventLogWriter implements EventLogWriter
 
         foreach ($eventLog as $event) {
             /** @var Event $event */
-            $statement->bindValue('emitterId', $this->sessionId->asString());
+            $statement->bindValue('emitterId', $this->checkoutId->asString());
             $statement->bindValue('topic', get_class($event));
             $statement->bindValue('occuredAt', $event->getOccuredAt()->format(DATE_ATOM));
             $statement->bindValue('data', serialize($event));

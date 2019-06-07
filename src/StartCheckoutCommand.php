@@ -3,6 +3,7 @@
 namespace Eventsourcing;
 use Eventsourcing\Cart\CartItemCollection;
 use Eventsourcing\Checkout\CartItem;
+use Eventsourcing\Checkout\CheckoutId;
 use Eventsourcing\Checkout\CheckoutService;
 
 class StartCheckoutCommand
@@ -17,21 +18,15 @@ class StartCheckoutCommand
      */
     private $checkoutService;
 
-    /**
-     * @var SessionId
-     */
-    private $sessionId;
-
-    public function __construct(CartService $cartService, CheckoutService $checkoutService, SessionId $sessionId)
+    public function __construct(CartService $cartService, CheckoutService $checkoutService)
     {
         $this->cartService = $cartService;
         $this->checkoutService = $checkoutService;
-        $this->sessionId = $sessionId;
     }
 
     public function execute(): void
     {
-        $cartItems = $this->cartService->getCartItems($this->sessionId);
+        $cartItems = $this->cartService->getCartItems();
         $this->checkoutService->startCheckout($this->mapCartItems($cartItems));
     }
 

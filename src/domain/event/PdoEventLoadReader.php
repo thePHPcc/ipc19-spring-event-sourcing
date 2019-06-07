@@ -1,6 +1,8 @@
 <?php declare(strict_types=1);
 
 namespace Eventsourcing;
+use Eventsourcing\Checkout\CheckoutId;
+
 class PdoEventLoadReader implements EventLogReader
 {
     /**
@@ -8,14 +10,14 @@ class PdoEventLoadReader implements EventLogReader
      */
     private $pdo;
     /**
-     * @var SessionId
+     * @var CheckoutId
      */
-    private $sessionId;
+    private $checkoutId;
 
-    public function __construct(\PDO $pdo, SessionId $sessionId)
+    public function __construct(\PDO $pdo, CheckoutId $checkoutId)
     {
         $this->pdo = $pdo;
-        $this->sessionId = $sessionId;
+        $this->checkoutId = $checkoutId;
     }
 
     public function read(): EventLog
@@ -23,7 +25,7 @@ class PdoEventLoadReader implements EventLogReader
         $eventLog = new EventLog();
         $statement = $this->pdo->prepare('
         SELECT data FROM events WHERE emitter_id = :emitterId');
-        $statement->bindValue('emitterId', $this->sessionId->asString());
+        $statement->bindValue('emitterId', $this->checkoutId->asString());
         $statement->execute();
         while($eventData = $statement->fetchColumn(0)) {
             $eventLog->add(unserialize($eventData));
