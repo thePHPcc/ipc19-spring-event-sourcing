@@ -5,5 +5,5 @@ interface EventHandler
 {
     public function handle(Event $event): void;
 
-    public function getSupportedEvents(): array;
+    public function getSupportedTopics(): array;
 }

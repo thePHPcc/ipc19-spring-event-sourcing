@@ -4,4 +4,6 @@ namespace Eventsourcing;
 interface Event
 {
     public function getOccuredAt(): \DateTimeImmutable;
+
+    public function getTopic(): Topic;
 }

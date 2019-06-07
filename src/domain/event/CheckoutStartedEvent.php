@@ -25,6 +25,11 @@ class CheckoutStartedEvent implements Event
         $this->occuredAt = $occuredAt;
     }
 
+    public function getTopic(): Topic
+    {
+        return new CheckoutStartedTopic();
+    }
+
     public function getOccuredAt(): \DateTimeImmutable
     {
         return $this->occuredAt;

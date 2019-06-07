@@ -29,7 +29,7 @@ class PdoEventLogWriter implements EventLogWriter
         foreach ($eventLog as $event) {
             /** @var Event $event */
             $statement->bindValue('emitterId', $this->checkoutId->asString());
-            $statement->bindValue('topic', get_class($event));
+            $statement->bindValue('topic', $event->getTopic()->asString());
             $statement->bindValue('occuredAt', $event->getOccuredAt()->format(DATE_ATOM));
             $statement->bindValue('data', serialize($event));
             $statement->execute();

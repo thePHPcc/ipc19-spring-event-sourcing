@@ -49,8 +49,8 @@ class CartItemListProjector implements EventHandler
         file_put_contents($this->filename, $listMarkup);
     }
 
-    public function getSupportedEvents(): array
+    public function getSupportedTopics(): array
     {
-        return [CheckoutStartedEvent::class];
+        return [new CheckoutStartedTopic()];
     }
 }

@@ -7,23 +7,24 @@ class EventListener
 
     public function register(EventHandler $eventHandler)
     {
-        foreach ($eventHandler->getSupportedEvents() as $supportedEvent) {
-            if (!array_key_exists($supportedEvent, $this->eventHandlers)) {
-                $this->eventHandlers[$supportedEvent] = [];
+        foreach ($eventHandler->getSupportedTopics() as $supportedTopic) {
+            /** @var Topic $supportedTopic */
+            if (!array_key_exists($supportedTopic->asString(), $this->eventHandlers)) {
+                $this->eventHandlers[$supportedTopic->asString()] = [];
             }
-            $this->eventHandlers[$supportedEvent][] = $eventHandler;
+            $this->eventHandlers[$supportedTopic->asString()][] = $eventHandler;
         }
     }
 
     public function handle(EventLog $eventLog): void
     {
         foreach ($eventLog as $event) {
-            $eventClass = get_class($event);
-            if (!array_key_exists($eventClass, $this->eventHandlers)) {
+            /** @var Event $event */
+            if (!array_key_exists($event->getTopic()->asString(), $this->eventHandlers)) {
                 continue;
             }
 
-            foreach ($this->eventHandlers[$eventClass] as $eventHandler) {
+            foreach ($this->eventHandlers[$event->getTopic()->asString()] as $eventHandler) {
                 /** @var EventHandler $eventHandler */
                 $eventHandler->handle($event);
             }
