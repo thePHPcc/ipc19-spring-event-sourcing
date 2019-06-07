@@ -29,6 +29,20 @@ class Factory
         );
     }
 
+    public function createStartCheckoutCommand(): StartCheckoutCommand
+    {
+        return new StartCheckoutCommand(
+            $this->createCartService(),
+            $this->createCheckoutService(),
+            $this->sessionId
+        );
+    }
+
+    private function createCartService(): CartService
+    {
+        return new CartService();
+    }
+
     private function createEventListener(): EventListener
     {
         $eventListener = new EventListener();
