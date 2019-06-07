@@ -4,7 +4,6 @@ namespace Eventsourcing\Checkout;
 use Eventsourcing\EventListener;
 use Eventsourcing\EventLogReader;
 use Eventsourcing\EventLogWriter;
-use Eventsourcing\SessionId;
 
 class CheckoutService
 {
@@ -32,16 +31,15 @@ class CheckoutService
         $this->eventListener = $eventListener;
     }
 
-    public function startCheckout(
-        CartItemCollection $cartItems,
-        SessionId $sessionId
-    ): void
+    public function startCheckout(CartItemCollection $cartItems): void
     {
-        $eventLog = $this->eventLogReader->read($sessionId);
+        $eventLog = $this->eventLogReader->read();
         $checkout = new Checkout($eventLog, new \DateTimeImmutable());
         $checkout->startCheckout($cartItems);
-        $this->eventLogWriter->write($checkout->getRecordedEvent(), $sessionId);
-        $this->eventListener->handle($eventLog);
+
+        $recordedEvents = $checkout->getRecordedEvents();
+        $this->eventLogWriter->write($recordedEvents);
+        $this->eventListener->handle($recordedEvents);
     }
 
 

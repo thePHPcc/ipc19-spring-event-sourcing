@@ -28,7 +28,7 @@ class Checkout
         $this->replay($history);
     }
 
-    public function getRecordedEvent(): EventLog
+    public function getRecordedEvents(): EventLog
     {
         return $this->eventLog;
     }

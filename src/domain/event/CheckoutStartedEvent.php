@@ -29,4 +29,9 @@ class CheckoutStartedEvent implements Event
     {
         return $this->occuredAt;
     }
+
+    public function getCartItems(): CartItemCollection
+    {
+        return $this->cartItems;
+    }
 }

@@ -3,5 +3,5 @@
 namespace Eventsourcing;
 interface EventLogWriter
 {
-    public function write(EventLog $eventLog, SessionId $sessionId): void;
+    public function write(EventLog $eventLog): void;
 }

@@ -10,6 +10,16 @@ class Factory
      */
     private $pdo;
 
+    /**
+     * @var SessionId
+     */
+    private $sessionId;
+
+    public function __construct(SessionId $sessionId)
+    {
+        $this->sessionId = $sessionId;
+    }
+
     public function createCheckoutService(): CheckoutService
     {
         return new CheckoutService(
@@ -21,17 +31,29 @@ class Factory
 
     private function createEventListener(): EventListener
     {
-        return new EventListener();
+        $eventListener = new EventListener();
+        $eventListener->register($this->createCartItemListProjector());
+
+        return $eventListener;
     }
 
     private function createEventLogReader(): EventLogReader
     {
-        return new PdoEventLoadReader($this->createPdo());
+        return new PdoEventLoadReader($this->createPdo(), $this->sessionId);
     }
 
     private function createEventLogWriter(): EventLogWriter
     {
-        return new PdoEventLogWriter($this->createPdo());
+        return new PdoEventLogWriter($this->createPdo(), $this->sessionId);
+    }
+
+    private function createCartItemListProjector(): CartItemListProjector
+    {
+        return new CartItemListProjector(
+            file_get_contents(__DIR__ . '/../conf/templates/cartItemList.html'),
+            file_get_contents(__DIR__ . '/../conf/templates/cartItem.html'),
+            __DIR__ . '/../var/projections/cartItems_' . $this->sessionId->asString() . '.html'
+        );
     }
 
     private function createPdo(): \PDO
