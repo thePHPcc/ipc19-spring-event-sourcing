@@ -5,13 +5,8 @@ use Eventsourcing\SessionId;
 
 require __DIR__ . '/vendor/autoload.php';
 
-$sessionId = new SessionId('has4t1glskcktjh4ujs9eet26u');
-$sessionFilename = __DIR__ . '/var/session_' . $sessionId->asString();
-if (!file_exists($sessionFilename)) {
-    $session = new \Eventsourcing\Session($sessionId);
-} else {
-    $session = unserialize(file_get_contents($sessionFilename));
-}
+$_COOKIE['checkout_demo_session'] = '10603jjdasv8vpid64t214762l';
+$session = new \Eventsourcing\Session();
 
 $factory = new Factory($session);
 
@@ -29,4 +24,3 @@ $billingAddress = new \Eventsourcing\Checkout\BillingAddress(
 //$factory->createStartCheckoutCommand()->execute();
 $factory->createCompleteCheckoutCommand()->execute();
 
-file_put_contents($sessionFilename, serialize($session));
